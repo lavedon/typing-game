@@ -18,13 +18,22 @@ describe('TypingGameComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+  // make a beforeEach that resets component properties
+  beforeEach(() => {
+    component.displayText = '';
+    component.userInput.setValue('');
+    component.currentLevel = 1;
+    component.correctInputs = 0;
+    component.gameOver = false;
+    component.maxLevel = 0;
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-    it('should have the correct initial state', () => {
-    expect(component.displayText).toBe('game.');
+  it('should have the correct initial state', () => {
+    expect(component.displayText).toBe('');
     expect(component.userInput.value).toBe('');
     expect(component.currentLevel).toBe(1);
     expect(component.correctInputs).toBe(0);
@@ -32,6 +41,8 @@ describe('TypingGameComponent', () => {
   });
 
   it('should update display text when the level changes', () => {
+    // This test needs to stub text to be put into the customText form control
+    component.customText.setValue('typing game.');
     component.currentLevel = 2;
     component.updateDisplayText();
     expect(component.displayText).toBe('typing game.');
@@ -76,7 +87,7 @@ describe('TypingGameComponent', () => {
     expect(component.gameOver).toBe(true);
   });
 
-  fit('A simple three word sentence should be won in three levels', () => {
+  it('A simple three word sentence should be won in three levels', () => {
     const inputText: string = "This is test.";
     const inputWords: string[] = inputText.split(' ').reverse();
 
@@ -102,5 +113,37 @@ describe('TypingGameComponent', () => {
     debugger;
     expect(component.gameOver).toBe(true);
     expect(component.currentLevel).toBe(3);
+  });
+
+  it('updateMaxLevel should be defined', () => {
+    expect(component.updateMaxLevel).toBeDefined();
+  });
+
+  it('updateDisplayText should be defined', () => {
+    expect(component.updateDisplayText).toBeDefined();
+  });
+
+  it('checkInput should be defined', () => {
+    expect(component.checkInput).toBeDefined();
+  });
+
+  it('updateMaxLevel should calculate a max level of 3 for a three word sentence', () => {
+    component.updateMaxLevel('This is test.');
+    expect(component.maxLevel).toBe(3);
+  });
+
+  it('updateMaxLevel should calculate a max level of 4 for a four word sentence', () => {
+    component.updateMaxLevel('This is a test.');
+    expect(component.maxLevel).toBe(4);
+  });
+
+  it('updateMaxLevel should calculate a max level of 5 for a five word sentence', () => {
+    component.updateMaxLevel('This is a sample test.');
+    expect(component.maxLevel).toBe(5);
+  });
+
+  it('updateMaxLevel should calculate a max level of 6 for a ten word sentence', () => {
+    component.updateMaxLevel('one two three four five six seven eight nine ten.');
+    expect(component.maxLevel).toBe(10);
   });
 });

@@ -67,7 +67,7 @@ export class TypingGameComponent implements OnInit {
       this.currentLevel++;
       this.correctInputs = 0;
 
-      if (this.currentLevel === this.maxLevel) {
+      if (this.currentLevel > this.maxLevel) {
         console.log('The game was won');
         console.assert(this.gameOver === false, 'Game over state is true');
         this.gameOver = true;
