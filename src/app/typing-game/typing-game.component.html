@@ -1,0 +1,13 @@
+<div class="game-container">
+    <div class="monitor-lines"></div>
+  <h1>Typing Game</h1>
+  <label for="custom-text">Paste your own text:</label>
+  <textarea id="custom-text" [formControl]="customText" (input)="updateDisplayText()"></textarea>
+  <p>{{displayText}}</p>
+  <input [formControl]="userInput" type="text" autofocus/>
+  <p>Correct inputs: {{correctInputs}} / 5 ({{5 - correctInputs}} remaining)</p>
+  <p>Current level: {{currentLevel}}  Max level: {{maxLevel}}</p>
+  <div *ngIf="gameOver">
+    <p>Congratulations, you have completed the game!</p>
+  </div>
+</div>
